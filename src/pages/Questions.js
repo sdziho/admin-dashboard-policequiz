@@ -54,7 +54,11 @@ export const QuestionsEdit = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
     sort: { field: "createdAt", order: "DESC" },
   });
-
+  console.log(data);
+  const subctg = useGetList("subcategories", {
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  console.log("potkategorije", subctg.data);
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -74,6 +78,16 @@ export const QuestionsEdit = (props) => {
                 label="Kategorije"
                 source="categories"
                 choices={data}
+              />
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {!subctg.isLoading && (
+              <AutocompleteArrayInput
+                validate={[required()]}
+                label="Potkategorije"
+                source="subcategories"
+                choices={subctg.data}
               />
             )}
           </Grid>
@@ -116,7 +130,10 @@ export const QuestionsCreate = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
     sort: { field: "createdAt", order: "DESC" },
   });
-
+  const subctg = useGetList("subcategories", {
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  console.log(subctg);
   const getQuestions = useGetList("questions", {
     sort: { field: "createdAt", order: "DESC" },
   });
@@ -175,6 +192,17 @@ export const QuestionsCreate = (props) => {
                 source="categories"
                 defaultValue={getQuestions.data[0].categories}
                 choices={data}
+              />
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {!subctg.isLoading && (
+              <AutocompleteArrayInput
+                validate={[required()]}
+                label="Potkategorije"
+                source="subcategories"
+                defaultValue={getQuestions.data[0].subcategories}
+                choices={subctg.data}
               />
             )}
           </Grid>

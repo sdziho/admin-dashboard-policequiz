@@ -15,12 +15,6 @@ import {
   useNotify,
   useRedirect,
   BooleanInput,
-  SelectInput,
-  ArrayInput,
-  SimpleFormIterator,
-  DateInput,
-  useGetList,
-  AutocompleteArrayInput,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -72,7 +66,7 @@ const CategoriesFilter = (props) => (
   </Filter>
 );
 
-export const CategoriesList = (props) => (
+export const SubcategoriesList = (props) => (
   <List {...props} filters={<CategoriesFilter />}>
     <Datagrid rowClick="edit">
       <TextField width="80%" label="Naziv" source="name" />
@@ -82,41 +76,26 @@ export const CategoriesList = (props) => (
   </List>
 );
 
-export const CategoriesEdit = (props) => {
-  const subctg = useGetList("subcategories", {
-    sort: { field: "createdAt", order: "DESC" },
-  });
-  return (
-    <Edit {...props}>
-      <SimpleForm>
-        <TextInput
-          source="name"
-          label="Naziv kategorije"
-          validate={[required()]}
-          fullWidth
-        />
-        {!subctg.isLoading && (
-          <AutocompleteArrayInput
-            validate={[required()]}
-            label="Potkategorije"
-            source="subcategories"
-            choices={subctg.data}
-          />
-        )}
+export const SubcategoriesEdit = (props) => (
+  <Edit {...props}>
+    <SimpleForm>
+      <TextInput
+        source="name"
+        label="Naziv kategorije"
+        validate={[required()]}
+        fullWidth
+      />
+    </SimpleForm>
+  </Edit>
+);
 
-        <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
-      </SimpleForm>
-    </Edit>
-  );
-};
-
-export const CategoriesCreate = (props) => {
+export const SubcategoriesCreate = (props) => {
   const notify = useNotify();
   const redirect = useRedirect();
 
   const onSuccess = (data) => {
     notify(`Kategorija uspješno kreirana!`);
-    redirect(`/categories`);
+    redirect(`/subcategories`);
   };
 
   return (
@@ -124,23 +103,10 @@ export const CategoriesCreate = (props) => {
       <SimpleForm>
         <TextInput
           source="name"
-          label="Naziv kategorije"
+          label="Naziv podkategorije"
           validate={[required()]}
           fullWidth
         />
-        <ArrayInput source="subcategories">
-          <SimpleFormIterator>
-            <SelectInput
-              source="id"
-              choices={[
-                { id: "TvEUR7Sx09jnN7l1vUEE", name: "PTKTG 2" },
-                { id: "jEVI2Ku0STNRfcLua1lk2mKYtRy2", name: "1" },
-                { id: "xJQCUl9GkdTGQK78rAAG", name: "new" },
-              ]}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
-        <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
       </SimpleForm>
     </Create>
   );

@@ -8,11 +8,15 @@ import {
   BooleanField,
   DateField,
   DatagridBody,
+  BooleanInput,
+  Edit,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-
+import { useUpdate, useNotify, useRefresh } from "react-admin";
+import { FirebaseDataProvider } from "react-admin-firebase";
+import { Switch } from "@material-ui/core";
 const CustomDatagridRow = ({
   record,
   resource,
@@ -58,6 +62,13 @@ const CustomDatagridBody = (props) => (
 const CustomDatagrid = (props) => (
   <Datagrid {...props} body={<CustomDatagridBody />} />
 );
+const CustomInputField = (props) => (
+  <Switch
+    {...props.isPremium}
+    defaultChecked
+    trackColor={{ true: "blue", false: "grey" }}
+  />
+);
 
 const UserFilter = (props) => (
   <Filter {...props}>
@@ -72,7 +83,7 @@ export const UserList = (props) => {
         <TextField width="20%" source="firstName" label="Ime" />
         <TextField width="20%" source="lastName" label="Prezime" />
         <TextField width="20%" source="email" label="E-mail" />
-        <BooleanField source="isPremium" label="Premium član" />
+        <CustomInputField source="isPremium" label="Premium član" />
         <DateField
           source="createdAt"
           label="Datum registracije"

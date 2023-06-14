@@ -8,6 +8,11 @@ import {
   CategoriesCreate,
 } from "./pages/Categories";
 import {
+  SubcategoriesList,
+  SubcategoriesEdit,
+  SubcategoriesCreate,
+} from "./pages/Subcategories";
+import {
   AdvertismentsList,
   AdvertismentsEdit,
   AdvertismentsCreate,
@@ -26,6 +31,7 @@ import CustomLoginPage from "./CustomLoginPage";
 
 import GroupIcon from "@mui/icons-material/Group";
 import CategoryIcon from "@mui/icons-material/Category";
+import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import { defaultTheme } from "react-admin";
@@ -94,6 +100,14 @@ class App extends React.Component {
           edit={CategoriesEdit}
           create={CategoriesCreate}
           icon={CategoryIcon}
+        />
+        <Resource
+          name="subcategories"
+          options={{ label: "Potkategorije" }}
+          list={SubcategoriesList}
+          edit={SubcategoriesEdit}
+          create={SubcategoriesCreate}
+          icon={ClassIcon}
         />
         <Resource
           name="questions"
