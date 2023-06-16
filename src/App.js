@@ -35,7 +35,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import { defaultTheme } from "react-admin";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
 import CustomAppBar from "./CustomAppBar";
 
@@ -43,7 +43,7 @@ import "./App.css";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
 
-const customTheme = createMuiTheme({
+const customTheme = createTheme({
   ...defaultTheme,
   ...{
     palette: {
@@ -58,13 +58,12 @@ const customTheme = createMuiTheme({
 });
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMB8N8Q2jZzqwhK7HCDDWKHDK9NB2lWhE",
-  authDomain: "policequiz-v2.firebaseapp.com",
-  projectId: "policequiz-v2",
-  storageBucket: "policequiz-v2.appspot.com",
-  messagingSenderId: "874175987764",
-  appId: "1:874175987764:web:d081934160711523964a61",
-  measurementId: "G-RF63XTTJJR",
+  apiKey: "AIzaSyAyVpMTbCfBuIxPtKRjIMYHjCZV0iYE4gE",
+  authDomain: "policequiz-v2-2039b.firebaseapp.com",
+  projectId: "policequiz-v2-2039b",
+  storageBucket: "policequiz-v2-2039b.appspot.com",
+  messagingSenderId: "564900068930",
+  appId: "1:564900068930:web:ee4dc9b18d02a07ec137db",
 };
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, {

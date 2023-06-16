@@ -25,13 +25,30 @@ import {
   useRedirect,
   AutocompleteArrayInput,
   Create,
+  useEditController,
 } from "react-admin";
 import Grid from "@material-ui/core/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const QuestionsFilter = (props) => (
   <Filter {...props}>
-    <TextInput label="Pretraga" source="question" alwaysOn />
+    <ReferenceInput
+      label="Kategorija"
+      source="categories"
+      reference="categories"
+      allowEmpty
+    >
+      <SelectInput label="Kategorije" optionText="name" />
+    </ReferenceInput>
+    <ReferenceInput
+      label="Potkategorija"
+      source="subcategories"
+      reference="subcategories"
+      allowEmpty
+    >
+      <SelectInput label="Potkategorije" optionText="name" />
+    </ReferenceInput>
+    <TextInput label="Pitanje" source="question" alwaysOn />
   </Filter>
 );
 
@@ -39,6 +56,11 @@ export const QuestionsList = (props) => (
   <List {...props} filters={<QuestionsFilter />}>
     <Datagrid>
       <ReferenceArrayField reference="categories" source="categories">
+        <SingleFieldList>
+          <TextField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
+      <ReferenceArrayField reference="subcategories" source="subcategories">
         <SingleFieldList>
           <TextField source="name" />
         </SingleFieldList>
@@ -54,11 +76,11 @@ export const QuestionsEdit = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
     sort: { field: "createdAt", order: "DESC" },
   });
-  console.log(data);
+
   const subctg = useGetList("subcategories", {
     sort: { field: "createdAt", order: "DESC" },
   });
-  console.log("potkategorije", subctg.data);
+
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -133,10 +155,10 @@ export const QuestionsCreate = (props) => {
   const subctg = useGetList("subcategories", {
     sort: { field: "createdAt", order: "DESC" },
   });
-  console.log(subctg);
   const getQuestions = useGetList("questions", {
     sort: { field: "createdAt", order: "DESC" },
   });
+  console.log(getQuestions);
 
   const validateUserCreation = (values) => {
     const errors = {};
@@ -190,7 +212,6 @@ export const QuestionsCreate = (props) => {
                 validate={[required()]}
                 label="Kategorije"
                 source="categories"
-                defaultValue={getQuestions.data[0].categories}
                 choices={data}
               />
             )}
@@ -201,7 +222,6 @@ export const QuestionsCreate = (props) => {
                 validate={[required()]}
                 label="Potkategorije"
                 source="subcategories"
-                defaultValue={getQuestions.data[0].subcategories}
                 choices={subctg.data}
               />
             )}
