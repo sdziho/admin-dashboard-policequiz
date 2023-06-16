@@ -38,6 +38,7 @@ import { defaultTheme } from "react-admin";
 import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
 import CustomAppBar from "./CustomAppBar";
+import env from "react-dotenv";
 
 import "./App.css";
 
@@ -56,14 +57,14 @@ const customTheme = createTheme({
     },
   },
 });
-
+console.log(process.env);
 const firebaseConfig = {
-  apiKey: "AIzaSyAyVpMTbCfBuIxPtKRjIMYHjCZV0iYE4gE",
-  authDomain: "policequiz-v2-2039b.firebaseapp.com",
-  projectId: "policequiz-v2-2039b",
-  storageBucket: "policequiz-v2-2039b.appspot.com",
-  messagingSenderId: "564900068930",
-  appId: "1:564900068930:web:ee4dc9b18d02a07ec137db",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
