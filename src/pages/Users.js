@@ -10,6 +10,8 @@ import {
   DatagridBody,
   BooleanInput,
   Edit,
+  SimpleForm,
+  EditButton,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -62,13 +64,6 @@ const CustomDatagridBody = (props) => (
 const CustomDatagrid = (props) => (
   <Datagrid {...props} body={<CustomDatagridBody />} />
 );
-const CustomInputField = (props) => (
-  <Switch
-    {...props.isPremium}
-    defaultChecked
-    trackColor={{ true: "blue", false: "grey" }}
-  />
-);
 
 const UserFilter = (props) => (
   <Filter {...props}>
@@ -83,13 +78,23 @@ export const UserList = (props) => {
         <TextField width="20%" source="firstName" label="Ime" />
         <TextField width="20%" source="lastName" label="Prezime" />
         <TextField width="20%" source="email" label="E-mail" />
-        <CustomInputField source="isPremium" label="Premium član" />
+        <BooleanField source="isPremium" label="Premium član" />
         <DateField
           source="createdAt"
           label="Datum registracije"
           locales="hr-HR"
         />
+        <EditButton width="10%" label="Uredi" />
       </CustomDatagrid>
     </List>
+  );
+};
+export const EditUserList = (props) => {
+  return (
+    <Edit {...props}>
+      <SimpleForm>
+        <BooleanInput label="Premium korisnik" source="isPremium" />
+      </SimpleForm>
+    </Edit>
   );
 };

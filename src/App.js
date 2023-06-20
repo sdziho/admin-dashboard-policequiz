@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Admin, Resource, Title, Layout } from "react-admin";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import { UserList } from "./pages/Users";
+import { EditUserList, UserList } from "./pages/Users";
 import {
   CategoriesList,
   CategoriesEdit,
@@ -57,7 +57,7 @@ const customTheme = createTheme({
     },
   },
 });
-console.log(process.env);
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -120,6 +120,7 @@ class App extends React.Component {
         <Resource
           name="users"
           list={UserList}
+          edit={EditUserList}
           icon={GroupIcon}
           options={{ label: "Korisnici" }}
         />
