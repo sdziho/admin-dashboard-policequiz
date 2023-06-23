@@ -35,7 +35,6 @@ const CustomDatagridRow = ({
   selected,
   basePath,
 }) => {
-  console.log("record", record.name);
   return (
     <TableRow key={id}>
       <TableCell style={{ width: "50%" }} padding="none">
@@ -97,7 +96,6 @@ export const CategoriesEdit = (props) => {
         />
         {!subctg.isLoading && (
           <AutocompleteArrayInput
-            validate={[required()]}
             label="Potkategorije"
             source="subcategories"
             choices={subctg.data}
@@ -113,7 +111,9 @@ export const CategoriesEdit = (props) => {
 export const CategoriesCreate = (props) => {
   const notify = useNotify();
   const redirect = useRedirect();
-
+  const subctg = useGetList("subcategories", {
+    sort: { field: "createdAt", order: "DESC" },
+  });
   const onSuccess = (data) => {
     notify(`Kategorija uspješno kreirana!`);
     redirect(`/categories`);
@@ -128,18 +128,13 @@ export const CategoriesCreate = (props) => {
           validate={[required()]}
           fullWidth
         />
-        <ArrayInput source="subcategories">
-          <SimpleFormIterator>
-            <SelectInput
-              source="id"
-              choices={[
-                { id: "TvEUR7Sx09jnN7l1vUEE", name: "PTKTG 2" },
-                { id: "jEVI2Ku0STNRfcLua1lk2mKYtRy2", name: "1" },
-                { id: "xJQCUl9GkdTGQK78rAAG", name: "new" },
-              ]}
-            />
-          </SimpleFormIterator>
-        </ArrayInput>
+        {!subctg.isLoading && (
+          <AutocompleteArrayInput
+            label="Potkategorije"
+            source="subcategories"
+            choices={subctg.data}
+          />
+        )}
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
       </SimpleForm>
     </Create>

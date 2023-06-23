@@ -106,7 +106,6 @@ export const QuestionsEdit = (props) => {
           <Grid item xs={6}>
             {!subctg.isLoading && (
               <AutocompleteArrayInput
-                validate={[required()]}
                 label="Potkategorije"
                 source="subcategories"
                 choices={subctg.data}
@@ -219,7 +218,6 @@ export const QuestionsCreate = (props) => {
           <Grid item xs={6}>
             {!subctg.isLoading && (
               <AutocompleteArrayInput
-                validate={[required()]}
                 label="Potkategorije"
                 source="subcategories"
                 choices={subctg.data}

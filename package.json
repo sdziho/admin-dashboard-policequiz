@@ -14,7 +14,7 @@
     "dotenv": "^16.2.0",
     "env-cmd": "^10.1.0",
     "faker": "^6.6.6",
-    "firebase": "^9.7.0",
+    "firebase": "^9.23.0",
     "ra-core": "^4.0.2",
     "ra-i18n-polyglot": "^4.0.2",
     "ra-language-english": "^4.0.2",

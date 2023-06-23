@@ -34,6 +34,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { defaultTheme } from "react-admin";
 import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
@@ -41,6 +42,11 @@ import CustomAppBar from "./CustomAppBar";
 import env from "react-dotenv";
 
 import "./App.css";
+import {
+  NotificationsCreate,
+  NotificationsEdit,
+  NotificationsList,
+} from "./pages/Notifications";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
 
@@ -131,6 +137,14 @@ class App extends React.Component {
           create={AdvertismentsCreate}
           options={{ label: "Oglašavanje" }}
           icon={ViewCarouselIcon}
+        />
+        <Resource
+          name="notifications"
+          list={NotificationsList}
+          edit={NotificationsEdit}
+          create={NotificationsCreate}
+          options={{ label: "Obavjesti" }}
+          icon={NotificationsIcon}
         />
       </Admin>
     );
