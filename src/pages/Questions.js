@@ -26,12 +26,15 @@ import {
   AutocompleteArrayInput,
   Create,
   useEditController,
+  NullableBooleanInput,
 } from "react-admin";
 import Grid from "@material-ui/core/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const QuestionsFilter = (props) => (
   <Filter {...props}>
+    <BooleanInput label="Za policajaca" source="isForPoliceman" alwaysOn />
+    <BooleanInput label="Za inspektora" source="isForInspector" alwaysOn />
     <ReferenceInput
       label="Kategorija"
       source="categories"
@@ -48,7 +51,7 @@ const QuestionsFilter = (props) => (
     >
       <SelectInput label="Potkategorije" optionText="name" />
     </ReferenceInput>
-    <TextInput label="Pitanje" source="question" alwaysOn />
+    <TextInput label="Pitanje" source="question" />
   </Filter>
 );
 
