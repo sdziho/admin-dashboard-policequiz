@@ -12,13 +12,45 @@ import {
   Edit,
   SimpleForm,
   EditButton,
+  ReferenceArrayField,
+  SingleFieldList,
+  ReferenceField,
+  AutocompleteArrayInput,
+  required,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { useUpdate, useNotify, useRefresh } from "react-admin";
 import { FirebaseDataProvider } from "react-admin-firebase";
-import { Switch } from "@material-ui/core";
+import { Grid, Switch } from "@material-ui/core";
+
+import { useGetList } from "react-admin";
+
+const CategoriesField = ({ record }) => {
+  const { data: categories, isLoading } = useGetList(
+    "categories", // Name of the categories resource
+    { page: 1, perPage: 1000 }, // Adjust the pagination options as needed
+    { field: "id", order: "ASC" }, // Sort the categories by ID in ascending order
+    {}
+  );
+  console.log(!isLoading || !record || !record.paymentDetails);
+  if (isLoading || !record || !record.paymentDetails) {
+    return null;
+  }
+
+  const categoryIds = record.paymentDetails.categories;
+  console.log(categoryIds);
+  const categoryNames = categoryIds
+    .map((categoryId) =>
+      categories.find((category) => category.id === categoryId)
+    )
+    .filter((category) => category)
+    .map((category) => category.name);
+
+  return <span>{categoryNames.join(", ")}</span>;
+};
+
 const CustomDatagridRow = ({
   record,
   resource,
@@ -78,22 +110,39 @@ export const UserList = (props) => {
         <TextField width="20%" source="firstName" label="Ime" />
         <TextField width="20%" source="lastName" label="Prezime" />
         <TextField width="20%" source="email" label="E-mail" />
+
         <BooleanField source="isPremium" label="Premium član" />
+
+        <CategoriesField source="paymentDetails" label="Kategorije" />
         <DateField
           source="createdAt"
           label="Datum registracije"
           locales="hr-HR"
         />
+
         <EditButton width="10%" label="Uredi" />
       </CustomDatagrid>
     </List>
   );
 };
 export const EditUserList = (props) => {
+  const { data, total, isLoading, error } = useGetList("categories", {
+    sort: { field: "createdAt", order: "DESC" },
+  });
   return (
     <Edit {...props}>
       <SimpleForm>
         <BooleanInput label="Premium korisnik" source="isPremium" />
+        <Grid item xs={6}>
+          {!isLoading && (
+            <AutocompleteArrayInput
+              validate={[required()]}
+              label="Kategorije"
+              source="paymentDetails.categories"
+              choices={data}
+            />
+          )}
+        </Grid>
       </SimpleForm>
     </Edit>
   );

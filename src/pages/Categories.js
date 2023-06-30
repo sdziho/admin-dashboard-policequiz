@@ -21,6 +21,7 @@ import {
   DateInput,
   useGetList,
   AutocompleteArrayInput,
+  NumberInput,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -85,6 +86,7 @@ export const CategoriesEdit = (props) => {
   const subctg = useGetList("subcategories", {
     sort: { field: "createdAt", order: "DESC" },
   });
+
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -101,7 +103,12 @@ export const CategoriesEdit = (props) => {
             choices={subctg.data}
           />
         )}
-
+        <NumberInput
+          source="price"
+          label="Cijena"
+          validate={[required()]}
+          fullWidth
+        />
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
       </SimpleForm>
     </Edit>
