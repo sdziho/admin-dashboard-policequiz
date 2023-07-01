@@ -12,17 +12,14 @@ import {
   Edit,
   SimpleForm,
   EditButton,
-  ReferenceArrayField,
-  SingleFieldList,
-  ReferenceField,
   AutocompleteArrayInput,
   required,
+  DateInput,
+  DateTimeInput,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { useUpdate, useNotify, useRefresh } from "react-admin";
-import { FirebaseDataProvider } from "react-admin-firebase";
 import { Grid, Switch } from "@material-ui/core";
 
 import { useGetList } from "react-admin";
@@ -40,7 +37,7 @@ const CategoriesField = ({ record }) => {
   }
 
   const categoryIds = record.paymentDetails.categories;
-  console.log(categoryIds);
+
   const categoryNames = categoryIds
     .map((categoryId) =>
       categories.find((category) => category.id === categoryId)
@@ -133,10 +130,17 @@ export const EditUserList = (props) => {
     <Edit {...props}>
       <SimpleForm>
         <BooleanInput label="Premium korisnik" source="isPremium" />
+        <Grid item xs={4}>
+          <DateTimeInput
+            validate={[required()]}
+            source="paymentDetails.createdAt"
+            label="Važi od"
+            fullWidth
+          />
+        </Grid>
         <Grid item xs={6}>
           {!isLoading && (
             <AutocompleteArrayInput
-              validate={[required()]}
               label="Kategorije"
               source="paymentDetails.categories"
               choices={data}

@@ -35,6 +35,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { defaultTheme } from "react-admin";
 import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
@@ -47,6 +48,7 @@ import {
   NotificationsEdit,
   NotificationsList,
 } from "./pages/Notifications";
+import { SettingsEdit, SettingsList } from "./pages/Settings";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
 
@@ -145,6 +147,13 @@ class App extends React.Component {
           create={NotificationsCreate}
           options={{ label: "Obavjesti" }}
           icon={NotificationsIcon}
+        />
+        <Resource
+          name="settings"
+          list={SettingsList}
+          edit={SettingsEdit}
+          options={{ label: "Postavke" }}
+          icon={AttachMoneyIcon}
         />
       </Admin>
     );
