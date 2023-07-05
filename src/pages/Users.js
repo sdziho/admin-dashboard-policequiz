@@ -31,12 +31,12 @@ const CategoriesField = ({ record }) => {
     { field: "id", order: "ASC" }, // Sort the categories by ID in ascending order
     {}
   );
-  console.log(!isLoading || !record || !record.paymentDetails);
+
   if (isLoading || !record || !record.paymentDetails) {
     return null;
   }
 
-  const categoryIds = record.paymentDetails.categories;
+  const categoryIds = record?.paymentDetails?.categories ?? [];
 
   const categoryNames = categoryIds
     .map((categoryId) =>
@@ -130,23 +130,24 @@ export const EditUserList = (props) => {
     <Edit {...props}>
       <SimpleForm>
         <BooleanInput label="Premium korisnik" source="isPremium" />
-        <Grid item xs={4}>
-          <DateTimeInput
-            validate={[required()]}
-            source="paymentDetails.createdAt"
-            label="Važi od"
+
+        <DateTimeInput
+          validate={[required()]}
+          source="paymentDetails.createdAt"
+          label="Važi od"
+          fullWidth
+        />
+
+        {!isLoading && (
+          <AutocompleteArrayInput
+            label="Kategorije"
+            source="paymentDetails.categories"
+            choices={data}
+            multiline
+            style={{ height: "auto" }}
             fullWidth
           />
-        </Grid>
-        <Grid item xs={6}>
-          {!isLoading && (
-            <AutocompleteArrayInput
-              label="Kategorije"
-              source="paymentDetails.categories"
-              choices={data}
-            />
-          )}
-        </Grid>
+        )}
       </SimpleForm>
     </Edit>
   );

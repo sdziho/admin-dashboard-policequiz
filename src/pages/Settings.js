@@ -7,12 +7,14 @@ import {
   SimpleForm,
   NumberField,
   NumberInput,
+  TextField,
 } from "react-admin";
 
 export const SettingsList = (props) => {
   return (
     <List {...props}>
       <Datagrid rowClick="edit">
+        <NumberField width="10%" label="Cijena MUP-a" source="mupPrice" />
         <NumberField
           width="10%"
           label="Cijena svih kategorija"
@@ -29,6 +31,7 @@ export const SettingsEdit = (props) => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <NumberInput width="80%" label="Cijena MUP-a" source="mupPrice" />
         <NumberInput
           width="80%"
           label="Cijena svih kategorija"

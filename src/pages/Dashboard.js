@@ -112,7 +112,7 @@ user.then((user) => {
 export const Dashboard = () => {
   const { data, total, isLoading, error } = useGetList("users", {
     sort: { field: "createdAt", order: "DESC" },
-    pagination: { page: 1, perPage: 3000 },
+    pagination: { page: 1, perPage: 20000 },
   });
   let usersPerMonth = [];
   if (!isLoading) {

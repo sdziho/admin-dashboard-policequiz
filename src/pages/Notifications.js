@@ -66,7 +66,10 @@ export const NotificationsEdit = (props) => {
             validate={[required()]}
             label="Kategorije"
             source="category"
+            multiline
+            style={{ height: "auto" }}
             choices={ctg.data}
+            fullWidth
           />
         )}
         <DateTimeInput source="startingAt" label="Datum početka" fullWidth />
