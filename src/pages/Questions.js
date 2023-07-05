@@ -32,29 +32,35 @@ import {
 import Grid from "@material-ui/core/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const QuestionsFilter = (props) => (
-  <Filter {...props}>
-    <BooleanInput label="Za policajaca" source="isForPoliceman" alwaysOn />
-    <BooleanInput label="Za inspektora" source="isForInspector" alwaysOn />
-    <ReferenceInput
-      label="Kategorija"
-      source="categories"
-      reference="categories"
-      allowEmpty
-    >
-      <SelectInput label="Kategorije" optionText="name" />
-    </ReferenceInput>
-    <ReferenceInput
-      label="Potkategorija"
-      source="subcategories"
-      reference="subcategories"
-      allowEmpty
-    >
-      <SelectInput label="Potkategorije" optionText="name" />
-    </ReferenceInput>
-    <TextInput label="Pitanje" source="question" />
-  </Filter>
-);
+const QuestionsFilter = (props) => {
+  const { data, total, isLoading, error } = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  console.log(data);
+  return (
+    <Filter {...props}>
+      <BooleanInput label="Za policajaca" source="isForPoliceman" alwaysOn />
+      <BooleanInput label="Za inspektora" source="isForInspector" alwaysOn />
+      <ReferenceInput
+        label="Kategorija"
+        source="categories"
+        reference="categories"
+        allowEmpty
+      >
+        <SelectInput label="Kategorije" optionText="name" />
+      </ReferenceInput>
+      {!isLoading && (
+        <AutocompleteArrayInput
+          label="Potkategorije"
+          source="subcategories"
+          choices={data}
+        />
+      )}
+      <TextInput label="Pitanje" source="question" />
+    </Filter>
+  );
+};
 
 export const QuestionsList = (props) => (
   <List
@@ -93,13 +99,15 @@ export const QuestionsList = (props) => (
 
 export const QuestionsEdit = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
 
   const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
-
+  console.log(subctg.data);
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -181,12 +189,11 @@ export const QuestionsCreate = (props) => {
   };
 
   const { data, total, isLoading, error } = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
   const subctg = useGetList("subcategories", {
-    sort: { field: "createdAt", order: "DESC" },
-  });
-  const getQuestions = useGetList("questions", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
 

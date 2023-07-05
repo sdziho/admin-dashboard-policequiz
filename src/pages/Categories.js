@@ -84,6 +84,7 @@ export const CategoriesList = (props) => (
 
 export const CategoriesEdit = (props) => {
   const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
 
@@ -120,6 +121,7 @@ export const CategoriesCreate = (props) => {
   const notify = useNotify();
   const redirect = useRedirect();
   const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
   const onSuccess = (data) => {

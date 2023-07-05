@@ -124,6 +124,7 @@ export const UserList = (props) => {
 };
 export const EditUserList = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
   const currentDate = new Date();

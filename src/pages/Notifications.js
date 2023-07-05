@@ -51,6 +51,7 @@ export const NotificationsList = (props) => {
 
 export const NotificationsEdit = (props) => {
   const ctg = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
   return (
@@ -84,6 +85,7 @@ export const NotificationsCreate = (props) => {
   const notify = useNotify();
   const redirect = useRedirect();
   const ctg = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
   const onSuccess = (data) => {
