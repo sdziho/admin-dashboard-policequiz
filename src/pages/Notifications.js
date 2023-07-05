@@ -18,6 +18,7 @@ import {
   DateTimeInput,
   DateField,
   AutocompleteInput,
+  AutocompleteArrayInput,
 } from "react-admin";
 
 export const NotificationsList = (props) => {
@@ -62,7 +63,7 @@ export const NotificationsEdit = (props) => {
           fullWidth
         />
         {!ctg.isLoading && (
-          <AutocompleteInput
+          <AutocompleteArrayInput
             validate={[required()]}
             label="Kategorije"
             source="category"
@@ -100,7 +101,7 @@ export const NotificationsCreate = (props) => {
           fullWidth
         />
         {!ctg.isLoading && (
-          <AutocompleteInput
+          <AutocompleteArrayInput
             validate={[required()]}
             label="Kategorije"
             source="category"

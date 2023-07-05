@@ -126,6 +126,7 @@ export const EditUserList = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
     sort: { field: "createdAt", order: "DESC" },
   });
+  const currentDate = new Date();
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -135,6 +136,7 @@ export const EditUserList = (props) => {
           validate={[required()]}
           source="paymentDetails.createdAt"
           label="Važi od"
+          defaultValue={currentDate}
           fullWidth
         />
 
