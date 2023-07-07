@@ -112,7 +112,7 @@ export const UserList = (props) => {
 
         <BooleanField source="isPremium" label="Premium član" />
 
-        <CategoriesField source="paymentDetails" label="Kategorije" />
+        {/* <CategoriesField source="paymentDetails" label="Kategorije" /> */}
         <DateField
           source="createdAt"
           label="Datum registracije"
