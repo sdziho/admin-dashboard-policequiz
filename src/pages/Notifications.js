@@ -58,6 +58,7 @@ export const NotificationsEdit = (props) => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput
+          multiline
           source="message"
           label="Poruka obavještenja"
           validate={[required()]}
@@ -100,6 +101,7 @@ export const NotificationsCreate = (props) => {
           source="message"
           label="Poruka obavještenja"
           validate={[required()]}
+          multiline
           fullWidth
         />
         {!ctg.isLoading && (

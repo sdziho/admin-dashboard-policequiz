@@ -111,7 +111,7 @@ export const CategoriesEdit = (props) => {
           fullWidth
         />
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
-        <TextInput label="Zakon" source="law" fullWidth />
+        <TextInput multiline label="Zakon" source="law" fullWidth />
       </SimpleForm>
     </Edit>
   );
@@ -146,7 +146,7 @@ export const CategoriesCreate = (props) => {
           />
         )}
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
-        <TextInput label="Zakon" source="law" fullWidth />
+        <TextInput multiline label="Zakon" source="law" fullWidth />
       </SimpleForm>
     </Create>
   );
