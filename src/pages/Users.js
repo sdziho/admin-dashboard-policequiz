@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Datagrid,
   List,
@@ -16,6 +16,8 @@ import {
   required,
   DateInput,
   DateTimeInput,
+  useNotify,
+  useDataProvider,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -123,14 +125,32 @@ export const UserList = (props) => {
   );
 };
 export const EditUserList = (props) => {
+  const [selectAll, setSelectAll] = useState(false);
   const { data, total, isLoading, error } = useGetList("categories", {
     pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
+  const notify = useNotify();
+  const dataProvider = useDataProvider();
   const currentDate = new Date();
+  const handleSubmit = async (values) => {
+    console.log(values);
+    if (selectAll) {
+      values.paymentDetails.categories = data.map((category) => category.id);
+    }
+    try {
+      await dataProvider.update("users", {
+        id: values.id,
+        data: values,
+      });
+      notify("Form saved successfully");
+    } catch (error) {
+      notify("Error: Could not save the form", "error");
+    }
+  };
   return (
     <Edit {...props}>
-      <SimpleForm>
+      <SimpleForm onSubmit={handleSubmit}>
         <BooleanInput label="Premium korisnik" source="isPremium" />
 
         <DateTimeInput
@@ -149,8 +169,15 @@ export const EditUserList = (props) => {
             multiline
             style={{ height: "auto" }}
             fullWidth
+            disabled={selectAll}
           />
         )}
+        <BooleanInput
+          label="Sve kategorije"
+          source="selectAll"
+          value={selectAll}
+          onChange={(event) => setSelectAll(event.target.checked)}
+        />
       </SimpleForm>
     </Edit>
   );
