@@ -76,6 +76,7 @@ export const CategoriesList = (props) => (
   <List {...props} filters={<CategoriesFilter />}>
     <Datagrid rowClick="edit">
       <TextField width="80%" label="Naziv" source="name" />
+      <TextField width="20%" label="Poredak" source="order" />
       <EditButton width="10%" label="Uredi" />
       <DeleteButton width="10%" label="Obriši" redirect={false} />
     </Datagrid>
@@ -104,12 +105,8 @@ export const CategoriesEdit = (props) => {
             choices={subctg.data}
           />
         )}
-        <NumberInput
-          source="price"
-          label="Cijena"
-          validate={[required()]}
-          fullWidth
-        />
+        <NumberInput source="price" label="Cijena" fullWidth />
+        <NumberInput source="order" label="Poredak" fullWidth />
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
         <TextInput multiline label="Zakon" source="law" fullWidth />
       </SimpleForm>
@@ -145,6 +142,7 @@ export const CategoriesCreate = (props) => {
             choices={subctg.data}
           />
         )}
+        <NumberInput source="order" label="Poredak" fullWidth />
         <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
         <TextInput multiline label="Zakon" source="law" fullWidth />
       </SimpleForm>
