@@ -103,12 +103,22 @@ export const CategoriesEdit = (props) => {
             label="Potkategorije"
             source="subcategories"
             choices={subctg.data}
+            fullWidth
           />
         )}
         <NumberInput source="price" label="Cijena" fullWidth />
         <NumberInput source="order" label="Poredak" fullWidth />
-        <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
+        <BooleanInput
+          label="Ima podkategorija (za policajca ili inspektora)"
+          source="hasSubcategory"
+        />
+        <BooleanInput
+          label="Ima super potkategorija (činovi)"
+          source="isSuperSubcategory"
+        />
+        <BooleanInput label="Drzavni" source="isDrzavni" />
         <TextInput multiline label="Zakon" source="law" fullWidth />
+        <TextInput multiline label="URL slike" source="imageURL" fullWidth />
       </SimpleForm>
     </Edit>
   );
@@ -140,11 +150,22 @@ export const CategoriesCreate = (props) => {
             label="Potkategorije"
             source="subcategories"
             choices={subctg.data}
+            fullWidth
           />
         )}
         <NumberInput source="order" label="Poredak" fullWidth />
-        <BooleanInput label="Ima podkategorija" source="hasSubcategory" />
+        <BooleanInput
+          label="Ima podkategorija (za policajca ili inspektora)"
+          source="hasSubcategory"
+        />
+        <BooleanInput
+          label="Ima super potkategorija (činovi)"
+          source="isSuperSubcategory"
+        />
+        <BooleanInput label="Drzavni" source="isDrzavni" />
+
         <TextInput multiline label="Zakon" source="law" fullWidth />
+        <TextInput multiline label="URL slike" source="imageURL" fullWidth />
       </SimpleForm>
     </Create>
   );

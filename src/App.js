@@ -35,7 +35,10 @@ import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import TuneIcon from "@mui/icons-material/Tune";
+import GavelIcon from "@mui/icons-material/Gavel";
+import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { defaultTheme } from "react-admin";
 import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
@@ -49,6 +52,17 @@ import {
   NotificationsList,
 } from "./pages/Notifications";
 import { SettingsEdit, SettingsList } from "./pages/Settings";
+import {
+  FitnessCreate,
+  FitnessEdit,
+  FitnessList,
+  KonkursiCreate,
+  KonkursiEdit,
+  KonkursiList,
+  MealCreate,
+  MealEdit,
+  MealList,
+} from "./pages/Additions";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
 
@@ -149,11 +163,35 @@ class App extends React.Component {
           icon={NotificationsIcon}
         />
         <Resource
+          name="konkursi"
+          list={KonkursiList}
+          edit={KonkursiEdit}
+          create={KonkursiCreate}
+          options={{ label: "Konkursi" }}
+          icon={GavelIcon}
+        />
+        <Resource
+          name="fizicka_sprema"
+          list={FitnessList}
+          edit={FitnessEdit}
+          create={FitnessCreate}
+          options={{ label: "Fizicka sprema" }}
+          icon={FitnessCenterIcon}
+        />
+        <Resource
+          name="plan_ishrane"
+          list={MealList}
+          edit={MealEdit}
+          create={MealCreate}
+          options={{ label: "Plan ishrane" }}
+          icon={LocalDiningIcon}
+        />
+        <Resource
           name="settings"
           list={SettingsList}
           edit={SettingsEdit}
           options={{ label: "Postavke" }}
-          icon={AttachMoneyIcon}
+          icon={TuneIcon}
         />
       </Admin>
     );

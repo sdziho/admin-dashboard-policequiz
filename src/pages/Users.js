@@ -118,6 +118,7 @@ export const UserList = (props) => {
           label="Datum registracije"
           locales="hr-HR"
         />
+        <DateField source="expiresAt" label="Važi do" locales="hr-HR" />
 
         <EditButton width="10%" label="Uredi" />
       </CustomDatagrid>
@@ -158,6 +159,11 @@ export const EditUserList = (props) => {
           source="paymentDetails.createdAt"
           label="Važi od"
           defaultValue={currentDate}
+          fullWidth
+        />
+        <DateTimeInput
+          source="paymentDetails.expiresAt"
+          label="Važi do"
           fullWidth
         />
 

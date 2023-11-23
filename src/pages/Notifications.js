@@ -25,17 +25,10 @@ export const NotificationsList = (props) => {
   return (
     <List {...props}>
       <Datagrid rowClick="edit">
-        <TextField width="80%" label="Naziv" source="message" />
-        <DateField
-          source="startingAt"
-          label="Datum registracije"
-          locales="hr-HR"
-        />
-        <DateField
-          source="endingAt"
-          label="Datum registracije"
-          locales="hr-HR"
-        />
+        <TextField width="80%" label="Naziv" source="title" />
+        <TextField width="80%" label="Poruka" source="message" />
+        <DateField source="startingAt" label="Počinje" locales="hr-HR" />
+        <DateField source="endingAt" label="Ističe" locales="hr-HR" />
         <EditButton width="10%" label="Uredi" />
         <DeleteButton
           width="10%"
@@ -60,11 +53,18 @@ export const NotificationsEdit = (props) => {
         <TextInput
           multiline
           source="message"
-          label="Poruka obavještenja"
+          label="Obavještenje"
           validate={[required()]}
           fullWidth
         />
-        {!ctg.isLoading && (
+        <TextInput
+          multiline
+          source="title"
+          label="Naslov"
+          validate={[required()]}
+          fullWidth
+        />
+        {/* {!ctg.isLoading && (
           <AutocompleteArrayInput
             validate={[required()]}
             label="Kategorije"
@@ -74,7 +74,7 @@ export const NotificationsEdit = (props) => {
             choices={ctg.data}
             fullWidth
           />
-        )}
+        )} */}
         <DateTimeInput source="startingAt" label="Datum početka" fullWidth />
         <DateTimeInput source="endingAt" label="Datum kraja" fullWidth />
       </SimpleForm>
@@ -104,7 +104,14 @@ export const NotificationsCreate = (props) => {
           multiline
           fullWidth
         />
-        {!ctg.isLoading && (
+        <TextInput
+          source="title"
+          label="Naslov"
+          validate={[required()]}
+          multiline
+          fullWidth
+        />
+        {/* {!ctg.isLoading && (
           <AutocompleteArrayInput
             validate={[required()]}
             label="Kategorije"
@@ -112,7 +119,7 @@ export const NotificationsCreate = (props) => {
             choices={ctg.data}
             fullWidth
           />
-        )}
+        )} */}
         <DateTimeInput source="startingAt" label="Datum početka" fullWidth />
         <DateTimeInput source="endingAt" label="Datum kraja" fullWidth />
       </SimpleForm>

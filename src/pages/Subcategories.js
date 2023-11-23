@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Datagrid,
   List,
@@ -15,6 +15,8 @@ import {
   useNotify,
   useRedirect,
   BooleanInput,
+  useGetList,
+  AutocompleteArrayInput,
 } from "react-admin";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableCell from "@material-ui/core/TableCell";
@@ -76,20 +78,49 @@ export const SubcategoriesList = (props) => (
   </List>
 );
 
-export const SubcategoriesEdit = (props) => (
-  <Edit {...props}>
-    <SimpleForm>
-      <TextInput
-        source="name"
-        label="Naziv kategorije"
-        validate={[required()]}
-        fullWidth
-      />
-    </SimpleForm>
-  </Edit>
-);
+export const SubcategoriesEdit = (props) => {
+  const [selectedSub, setSelectedSub] = useState([]);
+  const [isSuperSubcategory, setIsSuperSubcategory] = useState(false);
+  const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  useEffect(() => {
+    const filteredData =
+      subctg?.data?.filter((sub) => !sub.isSuperSubcategory) ?? [];
+    setSelectedSub(filteredData);
+  }, [subctg]);
+  return (
+    <Edit {...props}>
+      <SimpleForm>
+        <TextInput
+          source="name"
+          label="Naziv kategorije"
+          validate={[required()]}
+          fullWidth
+        />
+        <BooleanInput
+          label="Super potkategorija"
+          source="isSuperSubcategory"
+          onChange={(e) => setIsSuperSubcategory(e.target.checked)}
+        />
+        {!subctg.isLoading && isSuperSubcategory && (
+          <AutocompleteArrayInput
+            label="Potkategorije"
+            source="superSubcategories"
+            choices={selectedSub}
+            fullWidth
+          />
+        )}
+      </SimpleForm>
+    </Edit>
+  );
+};
 
 export const SubcategoriesCreate = (props) => {
+  const [selectedSub, setSelectedSub] = useState([]);
+  const [isSuperSubcategory, setIsSuperSubcategory] = useState(false);
+
   const notify = useNotify();
   const redirect = useRedirect();
 
@@ -97,6 +128,15 @@ export const SubcategoriesCreate = (props) => {
     notify(`Kategorija uspješno kreirana!`);
     redirect(`/subcategories`);
   };
+  const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  useEffect(() => {
+    const filteredData =
+      subctg?.data?.filter((sub) => !sub.isSuperSubcategory) ?? [];
+    setSelectedSub(filteredData);
+  }, [subctg]);
 
   return (
     <Create {...props} mutationOptions={{ onSuccess }}>
@@ -107,6 +147,19 @@ export const SubcategoriesCreate = (props) => {
           validate={[required()]}
           fullWidth
         />
+        <BooleanInput
+          label="Super potkategorija"
+          source="isSuperSubcategory"
+          onChange={(e) => setIsSuperSubcategory(e.target.checked)}
+        />
+        {!subctg.isLoading && isSuperSubcategory && (
+          <AutocompleteArrayInput
+            label="Potkategorije"
+            source="superSubcategories"
+            choices={selectedSub}
+            fullWidth
+          />
+        )}
       </SimpleForm>
     </Create>
   );
