@@ -119,6 +119,12 @@ export const CategoriesEdit = (props) => {
         <BooleanInput label="Drzavni" source="isDrzavni" />
         <TextInput multiline label="Zakon" source="law" fullWidth />
         <TextInput multiline label="URL slike" source="imageURL" fullWidth />
+        <ArrayInput source="fizicka_sprema" label="Fizička sprema">
+          <SimpleFormIterator>
+            <TextInput source="name" label="Ime" fullWidth />
+            <TextInput source="link" label="Link" fullWidth />
+          </SimpleFormIterator>
+        </ArrayInput>
       </SimpleForm>
     </Edit>
   );
@@ -166,6 +172,12 @@ export const CategoriesCreate = (props) => {
 
         <TextInput multiline label="Zakon" source="law" fullWidth />
         <TextInput multiline label="URL slike" source="imageURL" fullWidth />
+        <ArrayInput source="fizicka_sprema" label="Fizička sprema">
+          <SimpleFormIterator>
+            <TextInput source="name" label="Ime" fullWidth />
+            <TextInput source="link" label="Link" fullWidth />
+          </SimpleFormIterator>
+        </ArrayInput>
       </SimpleForm>
     </Create>
   );

@@ -73,8 +73,12 @@ export const SettingsEdit = (props) => {
             <TextInput source="" label="Link" fullWidth />
           </SimpleFormIterator>
         </ArrayInput>
+        <TextInput multiline source="esej" label="Esej" fullWidth />
         <TextInput source="spremaURL" label="Slika fizicke spreme" fullWidth />
         <TextInput source="ishranaURL" label="Slika plana ishrane" fullWidth />
+        <TextInput source="esejURL" label="Slika eseja" fullWidth />
+        <TextInput source="treniranjeURL" label="Slika treniranja" fullWidth />
+        <TextInput source="premiumURL" label="Slika plaćanja" fullWidth />
       </SimpleForm>
     </Edit>
   );

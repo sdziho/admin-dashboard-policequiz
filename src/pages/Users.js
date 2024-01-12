@@ -25,6 +25,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Grid, Switch } from "@material-ui/core";
 
 import { useGetList } from "react-admin";
+import { PostPagination } from "../App";
 
 const CategoriesField = ({ record }) => {
   const { data: categories, isLoading } = useGetList(
@@ -104,7 +105,7 @@ const UserFilter = (props) => (
 
 export const UserList = (props) => {
   return (
-    <List {...props} filters={<UserFilter />}>
+    <List {...props} pagination={<PostPagination />} filters={<UserFilter />}>
       <CustomDatagrid rowClick="edit">
         <TextField width="20%" source="firstName" label="Ime" />
         <TextField width="20%" source="lastName" label="Prezime" />
@@ -118,7 +119,12 @@ export const UserList = (props) => {
           label="Datum registracije"
           locales="hr-HR"
         />
-        <DateField source="expiresAt" label="Važi do" locales="hr-HR" />
+        <DateField
+          source="paymentDetails.expiresAt"
+          label="Važi do"
+          locales="hr-HR"
+          width="20%"
+        />
 
         <EditButton width="10%" label="Uredi" />
       </CustomDatagrid>

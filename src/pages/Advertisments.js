@@ -129,7 +129,7 @@ export const AdvertismentsEdit = (props) => (
               formData.isQuestionAd && (
                 <>
                   <ImageInput
-                    source="imagePermanent"
+                    source="imageQuestion"
                     label="Logotip"
                     placeholder="Učitajte sliku u omjeru 1:1 (kvadrat)"
                     className="squared_photo"
@@ -142,7 +142,7 @@ export const AdvertismentsEdit = (props) => (
                   </ImageInput>
                   <FormDataConsumer>
                     {({ formData, dispatch, ...rest }) => {
-                      if (!formData.imagePermanent) {
+                      if (!formData.imageQuestion) {
                         return (
                           <div className="placeholder_preupload">
                             <ImageField
@@ -169,7 +169,7 @@ export const AdvertismentsEdit = (props) => (
               formData.isPermanentAd && (
                 <>
                   <ImageInput
-                    source="imageQuestion"
+                    source="imagePermanent"
                     label="Banner / Logo"
                     placeholder="Učitajte sliku u omjeru 1:5 (pravougaonik)"
                     className="banner_photo"
@@ -181,7 +181,7 @@ export const AdvertismentsEdit = (props) => (
                   </ImageInput>
                   <FormDataConsumer>
                     {({ formData, dispatch, ...rest }) => {
-                      if (!formData.imageQuestion) {
+                      if (!formData.imagePermanent) {
                         return (
                           <div className="placeholder_preupload">
                             <ImageField
@@ -255,7 +255,7 @@ export const AdvertismentsCreate = (props) => {
                 formData.isQuestionAd && (
                   <>
                     <ImageInput
-                      source="imagePermanent"
+                      source="imageQuestion"
                       label="Logotip"
                       placeholder="Učitajte sliku u omjeru 1:1 (kvadrat)"
                       className="squared_photo"
@@ -268,7 +268,7 @@ export const AdvertismentsCreate = (props) => {
                     </ImageInput>
                     <FormDataConsumer>
                       {({ formData, dispatch, ...rest }) => {
-                        if (!formData.imagePermanent) {
+                        if (!formData.imageQuestion) {
                           return (
                             <div className="placeholder_preupload">
                               <ImageField
@@ -295,7 +295,7 @@ export const AdvertismentsCreate = (props) => {
                 formData.isPermanentAd && (
                   <>
                     <ImageInput
-                      source="imageQuestion"
+                      source="imagePermanent"
                       label="Banner / Logo"
                       placeholder="Učitajte sliku u omjeru 1:5 (pravougaonik)"
                       className="banner_photo"
@@ -307,7 +307,7 @@ export const AdvertismentsCreate = (props) => {
                     </ImageInput>
                     <FormDataConsumer>
                       {({ formData, dispatch, ...rest }) => {
-                        if (!formData.imageQuestion) {
+                        if (!formData.imagePermanent) {
                           return (
                             <div className="placeholder_preupload">
                               <ImageField

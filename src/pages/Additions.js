@@ -12,6 +12,8 @@ import {
   useRedirect,
   required,
   DeleteButton,
+  NumberField,
+  NumberInput,
 } from "react-admin";
 
 export const KonkursiList = (props) => {
@@ -20,7 +22,7 @@ export const KonkursiList = (props) => {
       <Datagrid rowClick="edit">
         <TextField label="Ime" source="name" />
         <TextField label="Opis" source="description" />
-        <TextField label="Link" source="url" />
+        <TextField label="Link" source="url" width="20%" />
         <TextField
           label="Link slike"
           source="picture"
@@ -89,7 +91,7 @@ export const KonkursiCreate = (props) => {
   );
 };
 
-export const FitnessList = (props) => {
+/* export const FitnessList = (props) => {
   return (
     <List {...props}>
       <Datagrid rowClick="edit">
@@ -148,13 +150,14 @@ export const FitnessCreate = (props) => {
     </Create>
   );
 };
-
+ */
 export const MealList = (props) => {
   return (
     <List {...props}>
       <Datagrid rowClick="edit">
-        <TextField label="Dan" source="day" />
-        <TextField label="Plan" source="plan" />
+        <TextField label="Dan" source="day" width="30%" />
+        <TextField label="Plan" source="plan" width="30%" />
+        <NumberField label="Redni broj" source="order" width="30%" />
         <EditButton width="10%" label="Uredi" />
         <DeleteButton
           width="10%"
@@ -174,6 +177,7 @@ export const MealEdit = (props) => {
       <SimpleForm>
         <TextInput multiline source="day" label="Dan" fullWidth />
         <TextInput multiline source="plan" label="Plan" fullWidth />
+        <NumberInput label="Redni broj" source="order" width="30%" />
       </SimpleForm>
     </Edit>
   );
@@ -183,8 +187,8 @@ export const MealCreate = (props) => {
   const notify = useNotify();
   const redirect = useRedirect();
   const onSuccess = (data) => {
-    notify(`Fizicka sprema uspješno kreirana!`);
-    redirect(`/fizicka_sprema`);
+    notify(`Plan ishrane uspješno kreirana!`);
+    redirect(`/plan_ishrane`);
   };
 
   return (
@@ -203,6 +207,78 @@ export const MealCreate = (props) => {
           validate={[required()]}
           multiline
           fullWidth
+        />
+        <NumberInput
+          label="Redni broj"
+          source="order"
+          width="30%"
+          validate={[required()]}
+        />
+      </SimpleForm>
+    </Create>
+  );
+};
+export const TrainingList = (props) => {
+  return (
+    <List {...props}>
+      <Datagrid rowClick="edit">
+        <TextField label="Plan" source="plan" width="30%" />
+        <NumberField label="Redni broj" source="order" width="30%" />
+        <EditButton width="10%" label="Uredi" />
+        <DeleteButton
+          width="10%"
+          label="Obriši"
+          basePath="/treniranje"
+          resource="treniranje"
+          redirect={false}
+        />
+      </Datagrid>
+    </List>
+  );
+};
+
+export const TrainingEdit = (props) => {
+  return (
+    <Edit {...props}>
+      <SimpleForm>
+        <TextInput multiline source="link" label="Link" fullWidth />
+        <TextInput multiline source="plan" label="Plan" fullWidth />
+        <NumberInput label="Redni broj" source="order" width="30%" />
+      </SimpleForm>
+    </Edit>
+  );
+};
+
+export const TrainingCreate = (props) => {
+  const notify = useNotify();
+  const redirect = useRedirect();
+  const onSuccess = (data) => {
+    notify(`Trening uspješno kreiran!`);
+    redirect(`/treniranje`);
+  };
+
+  return (
+    <Create {...props} mutationOptions={{ onSuccess }}>
+      <SimpleForm>
+        <TextInput
+          source="link"
+          label="Link"
+          validate={[required()]}
+          multiline
+          fullWidth
+        />
+        <TextInput
+          source="plan"
+          label="Plan"
+          validate={[required()]}
+          multiline
+          fullWidth
+        />
+        <NumberInput
+          label="Redni broj"
+          source="order"
+          width="30%"
+          validate={[required()]}
         />
       </SimpleForm>
     </Create>

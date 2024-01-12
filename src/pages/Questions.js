@@ -31,6 +31,7 @@ import {
 } from "react-admin";
 import Grid from "@material-ui/core/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
+import { PostPagination } from "../App";
 
 const QuestionsFilter = (props) => {
   const { data, total, isLoading, error } = useGetList("subcategories", {
@@ -67,6 +68,7 @@ export const QuestionsList = (props) => (
     {...props}
     sort={{ field: "createdAt", order: "DESC" }}
     filters={<QuestionsFilter />}
+    pagination={<PostPagination />}
   >
     <Datagrid>
       <ReferenceArrayField reference="categories" source="categories">

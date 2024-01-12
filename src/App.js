@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Admin, Resource, Title, Layout } from "react-admin";
+import { Admin, Resource, Title, Layout, Pagination } from "react-admin";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { EditUserList, UserList } from "./pages/Users";
 import {
@@ -39,6 +39,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import GavelIcon from "@mui/icons-material/Gavel";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { defaultTheme } from "react-admin";
 import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
@@ -53,18 +54,21 @@ import {
 } from "./pages/Notifications";
 import { SettingsEdit, SettingsList } from "./pages/Settings";
 import {
-  FitnessCreate,
-  FitnessEdit,
-  FitnessList,
   KonkursiCreate,
   KonkursiEdit,
   KonkursiList,
   MealCreate,
   MealEdit,
   MealList,
+  TrainingCreate,
+  TrainingEdit,
+  TrainingList,
 } from "./pages/Additions";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
+export const PostPagination = () => (
+  <Pagination rowsPerPageOptions={[10, 25, 50, 100, 200]} />
+);
 
 const customTheme = createTheme({
   ...defaultTheme,
@@ -170,14 +174,14 @@ class App extends React.Component {
           options={{ label: "Konkursi" }}
           icon={GavelIcon}
         />
-        <Resource
+        {/* <Resource
           name="fizicka_sprema"
           list={FitnessList}
           edit={FitnessEdit}
           create={FitnessCreate}
           options={{ label: "Fizicka sprema" }}
           icon={FitnessCenterIcon}
-        />
+        /> */}
         <Resource
           name="plan_ishrane"
           list={MealList}
@@ -185,6 +189,14 @@ class App extends React.Component {
           create={MealCreate}
           options={{ label: "Plan ishrane" }}
           icon={LocalDiningIcon}
+        />
+        <Resource
+          name="treniranje"
+          list={TrainingList}
+          edit={TrainingEdit}
+          create={TrainingCreate}
+          options={{ label: "Treniranje" }}
+          icon={MonitorHeartIcon}
         />
         <Resource
           name="settings"

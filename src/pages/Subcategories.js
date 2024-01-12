@@ -104,7 +104,7 @@ export const SubcategoriesEdit = (props) => {
           source="isSuperSubcategory"
           onChange={(e) => setIsSuperSubcategory(e.target.checked)}
         />
-        {!subctg.isLoading && isSuperSubcategory && (
+        {!subctg.isLoading && (
           <AutocompleteArrayInput
             label="Potkategorije"
             source="superSubcategories"
