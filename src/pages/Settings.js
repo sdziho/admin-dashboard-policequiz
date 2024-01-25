@@ -79,6 +79,7 @@ export const SettingsEdit = (props) => {
         <TextInput source="esejURL" label="Slika eseja" fullWidth />
         <TextInput source="treniranjeURL" label="Slika treniranja" fullWidth />
         <TextInput source="premiumURL" label="Slika plaćanja" fullWidth />
+        <TextInput source="videoTitle" label="Video ime" fullWidth />
       </SimpleForm>
     </Edit>
   );
