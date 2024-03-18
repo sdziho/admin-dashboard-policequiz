@@ -270,7 +270,11 @@ export const QuestionsCreate = (props) => {
         <ArrayInput
           source="answers"
           label="Odgovori"
-          defaultValue={[{ correctAnswer: true }]}
+          defaultValue={[
+            { correctAnswer: true },
+            { answer: "", correctAnswer: false },
+            { answer: "", correctAnswer: false },
+          ]}
         >
           <SimpleFormIterator getItemLabel={(index) => `#${index + 1}`}>
             <TextInput label="Odgovor" source="answer" />
