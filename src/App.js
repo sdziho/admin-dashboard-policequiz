@@ -1,12 +1,17 @@
 import * as React from "react";
-import { Admin, Resource, Title, Layout } from "react-admin";
+import { Admin, Resource, Title, Layout, Pagination } from "react-admin";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import { UserList } from "./pages/Users";
+import { EditUserList, UserList } from "./pages/Users";
 import {
   CategoriesList,
   CategoriesEdit,
   CategoriesCreate,
 } from "./pages/Categories";
+import {
+  SubcategoriesList,
+  SubcategoriesEdit,
+  SubcategoriesCreate,
+} from "./pages/Subcategories";
 import {
   AdvertismentsList,
   AdvertismentsEdit,
@@ -26,18 +31,46 @@ import CustomLoginPage from "./CustomLoginPage";
 
 import GroupIcon from "@mui/icons-material/Group";
 import CategoryIcon from "@mui/icons-material/Category";
+import ClassIcon from "@mui/icons-material/Class";
 import InventoryIcon from "@mui/icons-material/Quiz";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import TuneIcon from "@mui/icons-material/Tune";
+import GavelIcon from "@mui/icons-material/Gavel";
+import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import { defaultTheme } from "react-admin";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import CroatianTranslate from "./croatian";
 import CustomAppBar from "./CustomAppBar";
+import env from "react-dotenv";
 
 import "./App.css";
+import {
+  NotificationsCreate,
+  NotificationsEdit,
+  NotificationsList,
+} from "./pages/Notifications";
+import { SettingsEdit, SettingsList } from "./pages/Settings";
+import {
+  KonkursiCreate,
+  KonkursiEdit,
+  KonkursiList,
+  MealCreate,
+  MealEdit,
+  MealList,
+  TrainingCreate,
+  TrainingEdit,
+  TrainingList,
+} from "./pages/Additions";
 
 const CustomLayout = (props) => <Layout {...props} appBar={CustomAppBar} />;
+export const PostPagination = () => (
+  <Pagination rowsPerPageOptions={[10, 25, 50, 100, 200]} />
+);
 
-const customTheme = createMuiTheme({
+const customTheme = createTheme({
   ...defaultTheme,
   ...{
     palette: {
@@ -52,13 +85,12 @@ const customTheme = createMuiTheme({
 });
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMB8N8Q2jZzqwhK7HCDDWKHDK9NB2lWhE",
-  authDomain: "policequiz-v2.firebaseapp.com",
-  projectId: "policequiz-v2",
-  storageBucket: "policequiz-v2.appspot.com",
-  messagingSenderId: "874175987764",
-  appId: "1:874175987764:web:d081934160711523964a61",
-  measurementId: "G-RF63XTTJJR",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, {
@@ -96,6 +128,14 @@ class App extends React.Component {
           icon={CategoryIcon}
         />
         <Resource
+          name="subcategories"
+          options={{ label: "Potkategorije" }}
+          list={SubcategoriesList}
+          edit={SubcategoriesEdit}
+          create={SubcategoriesCreate}
+          icon={ClassIcon}
+        />
+        <Resource
           name="questions"
           options={{ label: "Pitanja" }}
           list={QuestionsList}
@@ -106,6 +146,7 @@ class App extends React.Component {
         <Resource
           name="users"
           list={UserList}
+          edit={EditUserList}
           icon={GroupIcon}
           options={{ label: "Korisnici" }}
         />
@@ -116,6 +157,53 @@ class App extends React.Component {
           create={AdvertismentsCreate}
           options={{ label: "Oglašavanje" }}
           icon={ViewCarouselIcon}
+        />
+        <Resource
+          name="notifications"
+          list={NotificationsList}
+          edit={NotificationsEdit}
+          create={NotificationsCreate}
+          options={{ label: "Obavjesti" }}
+          icon={NotificationsIcon}
+        />
+        <Resource
+          name="konkursi"
+          list={KonkursiList}
+          edit={KonkursiEdit}
+          create={KonkursiCreate}
+          options={{ label: "Konkursi" }}
+          icon={GavelIcon}
+        />
+        {/* <Resource
+          name="fizicka_sprema"
+          list={FitnessList}
+          edit={FitnessEdit}
+          create={FitnessCreate}
+          options={{ label: "Fizicka sprema" }}
+          icon={FitnessCenterIcon}
+        /> */}
+        <Resource
+          name="plan_ishrane"
+          list={MealList}
+          edit={MealEdit}
+          create={MealCreate}
+          options={{ label: "Plan ishrane" }}
+          icon={LocalDiningIcon}
+        />
+        <Resource
+          name="treniranje"
+          list={TrainingList}
+          edit={TrainingEdit}
+          create={TrainingCreate}
+          options={{ label: "Treniranje" }}
+          icon={MonitorHeartIcon}
+        />
+        <Resource
+          name="settings"
+          list={SettingsList}
+          edit={SettingsEdit}
+          options={{ label: "Postavke" }}
+          icon={TuneIcon}
         />
       </Admin>
     );

@@ -22,6 +22,7 @@ export default {
     boolean: {
       true: "Da",
       false: "Ne",
+      null: "-",
     },
     page: {
       list: "Lista %{name}",

@@ -25,24 +25,73 @@ import {
   useRedirect,
   AutocompleteArrayInput,
   Create,
+  useEditController,
+  NullableBooleanInput,
+  DateField,
 } from "react-admin";
 import Grid from "@material-ui/core/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
+import { PostPagination } from "../App";
 
-const QuestionsFilter = (props) => (
-  <Filter {...props}>
-    <TextInput label="Pretraga" source="question" alwaysOn />
-  </Filter>
-);
+const QuestionsFilter = (props) => {
+  const { data, total, isLoading, error } = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  console.log(data);
+  return (
+    <Filter {...props}>
+      <BooleanInput label="Za policajaca" source="isForPoliceman" alwaysOn />
+      <BooleanInput label="Za inspektora" source="isForInspector" alwaysOn />
+      <ReferenceInput
+        label="Kategorija"
+        source="categories"
+        reference="categories"
+        allowEmpty
+      >
+        <SelectInput label="Kategorije" optionText="name" />
+      </ReferenceInput>
+      {!isLoading && (
+        <AutocompleteArrayInput
+          label="Potkategorije"
+          source="subcategories"
+          choices={data}
+        />
+      )}
+      <TextInput label="Pitanje" source="question" />
+    </Filter>
+  );
+};
 
 export const QuestionsList = (props) => (
-  <List {...props} filters={<QuestionsFilter />}>
+  <List
+    {...props}
+    sort={{ field: "createdAt", order: "DESC" }}
+    filters={<QuestionsFilter />}
+    pagination={<PostPagination />}
+  >
     <Datagrid>
       <ReferenceArrayField reference="categories" source="categories">
         <SingleFieldList>
           <TextField source="name" />
         </SingleFieldList>
       </ReferenceArrayField>
+      <ReferenceArrayField
+        width="20%"
+        reference="subcategories"
+        source="subcategories"
+      >
+        <SingleFieldList>
+          <TextField source="name" />
+        </SingleFieldList>
+      </ReferenceArrayField>
+      <DateField
+        width="10%"
+        source="createdAt"
+        label="Napravljeno"
+        locales="hr-HR"
+        showTime={true}
+      />
       <TextField source="question" label="Pitanje" />
       <EditButton width="10%" label="Uredi" />
       <DeleteButton width="10%" label="Obriši" redirect={false} />
@@ -52,9 +101,15 @@ export const QuestionsList = (props) => (
 
 export const QuestionsEdit = (props) => {
   const { data, total, isLoading, error } = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
 
+  const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
+    sort: { field: "createdAt", order: "DESC" },
+  });
+  console.log(subctg.data);
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -63,6 +118,8 @@ export const QuestionsEdit = (props) => {
             <TextInput
               source="question"
               label="Pitanje"
+              multiline
+              style={{ height: "auto" }}
               validate={[required()]}
               fullWidth
             />
@@ -74,6 +131,15 @@ export const QuestionsEdit = (props) => {
                 label="Kategorije"
                 source="categories"
                 choices={data}
+              />
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {!subctg.isLoading && (
+              <AutocompleteArrayInput
+                label="Potkategorije"
+                source="subcategories"
+                choices={subctg.data}
               />
             )}
           </Grid>
@@ -107,23 +173,35 @@ export const QuestionsCreate = (props) => {
   const redirect = useRedirect();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const userPrefs = JSON.parse(localStorage.getItem("userPrefs")) ?? {};
+  console.log(userPrefs);
   const onSuccess = (data) => {
+    localStorage.setItem(
+      "userPrefs",
+      JSON.stringify({
+        categories: data.categories,
+        subcategories: data.subcategories,
+        isForPoliceman: data.isForPoliceman,
+        isForInspector: data.isForInspector,
+      })
+    );
+
     notify(`Pitanje uspješno kreirano!`);
     navigate(0, { newlyCreated: true });
   };
 
   const { data, total, isLoading, error } = useGetList("categories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
-
-  const getQuestions = useGetList("questions", {
+  const subctg = useGetList("subcategories", {
+    pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
 
   const validateUserCreation = (values) => {
     const errors = {};
-    console.log("ovo su values", values);
+
     if (values.answers.length < 2) {
       errors.answers = "Morate unijeti minimalno 2 odgovara";
     }
@@ -158,29 +236,47 @@ export const QuestionsCreate = (props) => {
   return (
     <Create {...props} mutationOptions={{ onSuccess }}>
       <SimpleForm validate={validateUserCreation}>
+        <TextInput
+          source="question"
+          label="Pitanje"
+          multiline
+          style={{ height: "auto" }}
+          validate={[required()]}
+          fullWidth
+        />
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextInput
-              source="question"
-              label="Pitanje"
-              validate={[required()]}
-              fullWidth
-            />
-          </Grid>
           <Grid item xs={6}>
             {!isLoading && (
               <AutocompleteArrayInput
                 validate={[required()]}
                 label="Kategorije"
                 source="categories"
-                defaultValue={getQuestions.data[0].categories}
                 choices={data}
+                defaultValue={userPrefs?.categories ?? []}
+              />
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            {!subctg.isLoading && (
+              <AutocompleteArrayInput
+                label="Potkategorije"
+                source="subcategories"
+                choices={subctg.data}
+                defaultValue={userPrefs?.subcategories ?? []}
               />
             )}
           </Grid>
         </Grid>
-        <ArrayInput source="answers" label="Odgovori">
-          <SimpleFormIterator>
+        <ArrayInput
+          source="answers"
+          label="Odgovori"
+          defaultValue={[
+            { correctAnswer: true },
+            { answer: "", correctAnswer: false },
+            { answer: "", correctAnswer: false },
+          ]}
+        >
+          <SimpleFormIterator getItemLabel={(index) => `#${index + 1}`}>
             <TextInput label="Odgovor" source="answer" />
             <BooleanInput label="Tačan" source="correctAnswer" />
           </SimpleFormIterator>
@@ -190,14 +286,14 @@ export const QuestionsCreate = (props) => {
             <BooleanInput
               label="Za inspektora"
               source="isForInspector"
-              defaultValue
+              defaultValue={userPrefs?.isForInspector ?? false}
             />
           </Grid>
           <Grid item xs={2}>
             <BooleanInput
               label="Za policajca"
               source="isForPoliceman"
-              defaultValue
+              defaultValue={userPrefs?.isForPoliceman ?? false}
             />
           </Grid>
         </Grid>

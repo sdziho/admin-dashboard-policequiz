@@ -93,13 +93,12 @@ const labels_age = [
 ];
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMB8N8Q2jZzqwhK7HCDDWKHDK9NB2lWhE",
-  authDomain: "policequiz-v2.firebaseapp.com",
-  projectId: "policequiz-v2",
-  storageBucket: "policequiz-v2.appspot.com",
-  messagingSenderId: "874175987764",
-  appId: "1:874175987764:web:d081934160711523964a61",
-  measurementId: "G-RF63XTTJJR",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const authProvider = FirebaseAuthProvider(firebaseConfig, {});
@@ -113,7 +112,7 @@ user.then((user) => {
 export const Dashboard = () => {
   const { data, total, isLoading, error } = useGetList("users", {
     sort: { field: "createdAt", order: "DESC" },
-    pagination: { page: 1, perPage: 3000 },
+    pagination: { page: 1, perPage: 20000 },
   });
   let usersPerMonth = [];
   if (!isLoading) {
