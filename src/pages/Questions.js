@@ -38,7 +38,6 @@ const QuestionsFilter = (props) => {
     pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
-  console.log(data);
   return (
     <Filter {...props}>
       <BooleanInput label="Za policajaca" source="isForPoliceman" alwaysOn />
@@ -109,7 +108,6 @@ export const QuestionsEdit = (props) => {
     pagination: { page: 1, perPage: 300 },
     sort: { field: "createdAt", order: "DESC" },
   });
-  console.log(subctg.data);
   return (
     <Edit {...props}>
       <SimpleForm>
@@ -174,7 +172,6 @@ export const QuestionsCreate = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const userPrefs = JSON.parse(localStorage.getItem("userPrefs")) ?? {};
-  console.log(userPrefs);
   const onSuccess = (data) => {
     localStorage.setItem(
       "userPrefs",
@@ -202,14 +199,14 @@ export const QuestionsCreate = (props) => {
   const validateUserCreation = (values) => {
     const errors = {};
 
-    if (values.answers.length < 2) {
+    if (values.answers?.length < 2) {
       errors.answers = "Morate unijeti minimalno 2 odgovara";
     }
-    if (values.answers.length > 0) {
+    if (values.answers?.length > 0) {
       let imaBaremJedanTacan = false;
       let imaViseTacnih = false;
       values.answers.forEach((answer, index) => {
-        if (answer.answer.length === 0) {
+        if (answer.answer?.length === 0) {
           errors.answers = "Odgovor ne smije biti prazan";
         }
         if (answer.correctAnswer) {
@@ -227,7 +224,7 @@ export const QuestionsCreate = (props) => {
         errors.answers = "Samo jedan odgovor može biti tačan";
       }
     }
-    if (values.categories.length === 0) {
+    if (values.categories?.length === 0) {
       errors.categories = "Morate unijeti minimalno 1 kategoriju";
     }
     return errors;

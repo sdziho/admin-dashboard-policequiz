@@ -31,7 +31,6 @@ const CustomDatagridRow = ({
   selected,
   basePath,
 }) => {
-  console.log("record", record.name);
   return (
     <TableRow key={id}>
       <TableCell style={{ width: "50%" }} padding="none">
